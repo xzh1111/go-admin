@@ -1,13 +1,14 @@
 package apis
 
 import (
+	"go-admin/app/admin/models"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-admin-team/go-admin-core/sdk/api"
 	"github.com/go-admin-team/go-admin-core/sdk/pkg"
 	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
 	_ "github.com/go-admin-team/go-admin-core/sdk/pkg/response"
-	"go-admin/app/admin/models"
 
 	"go-admin/app/admin/service"
 	"go-admin/app/admin/service/dto"
@@ -40,7 +41,7 @@ func (e SysDept) GetPage(c *gin.Context) {
 		e.Error(500, err, err.Error())
 		return
 	}
-	list := make([]models.SysDept, 0)
+	var list []models.SysDept
 	list, err = s.SetDeptPage(&req)
 	if err != nil {
 		e.Error(500, err, "查询失败")
@@ -187,7 +188,7 @@ func (e SysDept) Get2Tree(c *gin.Context) {
 	req := dto.SysDeptGetPageReq{}
 	err := e.MakeContext(c).
 		MakeOrm().
-		Bind(&req,binding.Form).
+		Bind(&req, binding.Form).
 		MakeService(&s.Service).
 		Errors
 	if err != nil {
