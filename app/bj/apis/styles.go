@@ -18,12 +18,13 @@ type Styles struct {
 	api.Api
 }
 
-// GetPage 获取Styles列表
-// @Summary 获取Styles列表
-// @Description 获取Styles列表
-// @Tags Styles
+// GetPage 获取款式列表
+// @Summary 获取款式列表
+// @Description 获取款式列表
+// @Tags 款式
 // @Param name query string false "款式"
 // @Param price query int64 false "价格"
+// @Param image query string false "图片"
 // @Param pageSize query int false "页条数"
 // @Param pageIndex query int false "页码"
 // @Success 200 {object} response.Response{data=response.Page{list=[]models.Styles}} "{"code": 200, "data": [...]}"
@@ -49,17 +50,17 @@ func (e Styles) GetPage(c *gin.Context) {
 
 	err = s.GetPage(&req, p, &list, &count)
 	if err != nil {
-		e.Error(500, err, fmt.Sprintf("获取Styles失败，\r\n失败信息 %s", err.Error()))
+		e.Error(500, err, fmt.Sprintf("获取款式失败，\r\n失败信息 %s", err.Error()))
         return
 	}
 
 	e.PageOK(list, int(count), req.GetPageIndex(), req.GetPageSize(), "查询成功")
 }
 
-// Get 获取Styles
-// @Summary 获取Styles
-// @Description 获取Styles
-// @Tags Styles
+// Get 获取款式
+// @Summary 获取款式
+// @Description 获取款式
+// @Tags 款式
 // @Param id path int false "id"
 // @Success 200 {object} response.Response{data=models.Styles} "{"code": 200, "data": [...]}"
 // @Router /api/v1/styles/{id} [get]
@@ -82,17 +83,17 @@ func (e Styles) Get(c *gin.Context) {
 	p := actions.GetPermissionFromContext(c)
 	err = s.Get(&req, p, &object)
 	if err != nil {
-		e.Error(500, err, fmt.Sprintf("获取Styles失败，\r\n失败信息 %s", err.Error()))
+		e.Error(500, err, fmt.Sprintf("获取款式失败，\r\n失败信息 %s", err.Error()))
         return
 	}
 
 	e.OK( object, "查询成功")
 }
 
-// Insert 创建Styles
-// @Summary 创建Styles
-// @Description 创建Styles
-// @Tags Styles
+// Insert 创建款式
+// @Summary 创建款式
+// @Description 创建款式
+// @Tags 款式
 // @Accept application/json
 // @Product application/json
 // @Param data body dto.StylesInsertReq true "data"
@@ -117,17 +118,17 @@ func (e Styles) Insert(c *gin.Context) {
 
 	err = s.Insert(&req)
 	if err != nil {
-		e.Error(500, err, fmt.Sprintf("创建Styles失败，\r\n失败信息 %s", err.Error()))
+		e.Error(500, err, fmt.Sprintf("创建款式失败，\r\n失败信息 %s", err.Error()))
         return
 	}
 
 	e.OK(req.GetId(), "创建成功")
 }
 
-// Update 修改Styles
-// @Summary 修改Styles
-// @Description 修改Styles
-// @Tags Styles
+// Update 修改款式
+// @Summary 修改款式
+// @Description 修改款式
+// @Tags 款式
 // @Accept application/json
 // @Product application/json
 // @Param id path int true "id"
@@ -153,16 +154,16 @@ func (e Styles) Update(c *gin.Context) {
 
 	err = s.Update(&req, p)
 	if err != nil {
-		e.Error(500, err, fmt.Sprintf("修改Styles失败，\r\n失败信息 %s", err.Error()))
+		e.Error(500, err, fmt.Sprintf("修改款式失败，\r\n失败信息 %s", err.Error()))
         return
 	}
 	e.OK( req.GetId(), "修改成功")
 }
 
-// Delete 删除Styles
-// @Summary 删除Styles
-// @Description 删除Styles
-// @Tags Styles
+// Delete 删除款式
+// @Summary 删除款式
+// @Description 删除款式
+// @Tags 款式
 // @Param data body dto.StylesDeleteReq true "body"
 // @Success 200 {object} response.Response	"{"code": 200, "message": "删除成功"}"
 // @Router /api/v1/styles [delete]
@@ -186,7 +187,7 @@ func (e Styles) Delete(c *gin.Context) {
 
 	err = s.Remove(&req, p)
 	if err != nil {
-		e.Error(500, err, fmt.Sprintf("删除Styles失败，\r\n失败信息 %s", err.Error()))
+		e.Error(500, err, fmt.Sprintf("删除款式失败，\r\n失败信息 %s", err.Error()))
         return
 	}
 	e.OK( req.GetId(), "删除成功")

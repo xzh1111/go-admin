@@ -21,6 +21,8 @@ CREATE TABLE `paints` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE paints
+ADD COLUMN created_at timestamp NULL DEFAULT NULL,
+ADD COLUMN updated_at timestamp NULL DEFAULT NULL,
 ADD COLUMN deleted_at TIMESTAMP NULL DEFAULT NULL,
 ADD COLUMN create_by INT(11) UNSIGNED DEFAULT NULL,
 ADD COLUMN update_by INT(11) UNSIGNED DEFAULT NULL;
@@ -32,6 +34,13 @@ CREATE TABLE `regions` (
   `base2` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE regions
+ADD COLUMN created_at timestamp NULL DEFAULT NULL,
+ADD COLUMN updated_at timestamp NULL DEFAULT NULL,
+ADD COLUMN deleted_at TIMESTAMP NULL DEFAULT NULL,
+ADD COLUMN create_by INT(11) UNSIGNED DEFAULT NULL,
+ADD COLUMN update_by INT(11) UNSIGNED DEFAULT NULL;
 
 CREATE TABLE `quotations` (
   `id` bigint NOT NULL AUTO_INCREMENT,
@@ -51,3 +60,5 @@ CREATE TABLE `quotations` (
   FOREIGN KEY (`paint_id`) REFERENCES `paints` (`id`),
   FOREIGN KEY (`region_id`) REFERENCES `regions` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
