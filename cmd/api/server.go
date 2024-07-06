@@ -3,12 +3,13 @@ package api
 import (
 	"context"
 	"fmt"
-	"github.com/pkg/errors"
 	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/pkg/errors"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-admin-team/go-admin-core/config/source/file"
@@ -27,6 +28,8 @@ import (
 	"go-admin/common/middleware/handler"
 	"go-admin/common/storage"
 	ext "go-admin/config"
+
+	bj "go-admin/app/bj/models"
 )
 
 var (
@@ -96,6 +99,9 @@ func run() error {
 		jobs.Setup(sdk.Runtime.GetDb())
 
 	}()
+
+	// 定时更新公式
+	bj.InitFormulaMapper(sdk.Runtime.GetDbByKey("*"))
 
 	if apiCheck {
 		var routers = sdk.Runtime.GetRouter()

@@ -3,7 +3,7 @@ package service
 import (
 	"errors"
 
-    "github.com/go-admin-team/go-admin-core/sdk/service"
+	"github.com/go-admin-team/go-admin-core/sdk/service"
 	"gorm.io/gorm"
 
 	"go-admin/app/bj/models"
@@ -59,9 +59,15 @@ func (e *QuotationsV1) Get(d *dto.QuotationsV1GetReq, p *actions.DataPermission,
 
 // Insert 创建QuotationsV1对象
 func (e *QuotationsV1) Insert(c *dto.QuotationsV1InsertReq) error {
-    var err error
-    var data models.QuotationsV1
-    c.Generate(&data)
+	var err error
+	var data models.QuotationsV1
+	// 完成相关报价计算
+	err = e.Compute((*dto.QuotationsV1Req)(c))
+	if err != nil {
+		e.Log.Errorf("QuotationsV1Service Compute error:%s \r\n", err)
+		return err
+	}
+	c.Generate(&data)
 	err = e.Orm.Create(&data).Error
 	if err != nil {
 		e.Log.Errorf("QuotationsV1Service Insert error:%s \r\n", err)
@@ -72,22 +78,28 @@ func (e *QuotationsV1) Insert(c *dto.QuotationsV1InsertReq) error {
 
 // Update 修改QuotationsV1对象
 func (e *QuotationsV1) Update(c *dto.QuotationsV1UpdateReq, p *actions.DataPermission) error {
-    var err error
-    var data = models.QuotationsV1{}
-    e.Orm.Scopes(
-            actions.Permission(data.TableName(), p),
-        ).First(&data, c.GetId())
-    c.Generate(&data)
+	var err error
+	var data = models.QuotationsV1{}
+	e.Orm.Scopes(
+		actions.Permission(data.TableName(), p),
+	).First(&data, c.GetId())
+	// 完成相关报价计算
+	err = e.Compute((*dto.QuotationsV1Req)(c))
+	if err != nil {
+		e.Log.Errorf("QuotationsV1Service Compute error:%s \r\n", err)
+		return err
+	}
+	c.Generate(&data)
 
-    db := e.Orm.Save(&data)
-    if err = db.Error; err != nil {
-        e.Log.Errorf("QuotationsV1Service Save error:%s \r\n", err)
-        return err
-    }
-    if db.RowsAffected == 0 {
-        return errors.New("无权更新该数据")
-    }
-    return nil
+	db := e.Orm.Save(&data)
+	if err = db.Error; err != nil {
+		e.Log.Errorf("QuotationsV1Service Save error:%s \r\n", err)
+		return err
+	}
+	if db.RowsAffected == 0 {
+		return errors.New("无权更新该数据")
+	}
+	return nil
 }
 
 // Remove 删除QuotationsV1
@@ -99,11 +111,11 @@ func (e *QuotationsV1) Remove(d *dto.QuotationsV1DeleteReq, p *actions.DataPermi
 			actions.Permission(data.TableName(), p),
 		).Delete(&data, d.GetId())
 	if err := db.Error; err != nil {
-        e.Log.Errorf("Service RemoveQuotationsV1 error:%s \r\n", err)
-        return err
-    }
-    if db.RowsAffected == 0 {
-        return errors.New("无权删除该数据")
-    }
+		e.Log.Errorf("Service RemoveQuotationsV1 error:%s \r\n", err)
+		return err
+	}
+	if db.RowsAffected == 0 {
+		return errors.New("无权删除该数据")
+	}
 	return nil
 }
