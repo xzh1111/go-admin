@@ -48,7 +48,7 @@ func (m *FormulaMapper) sync() error {
 
 	formulas := &[]BjFormula{}
 
-	err := m.db.Model(&data).Find(formulas).Limit(-1).Offset(-1).Error
+	err := m.db.Order("priority ASC").Model(&data).Find(formulas).Limit(-1).Offset(-1).Error
 	if err != nil {
 		log.Errorf("FormulaMapper sync error:%s, %s", err.Error())
 		return err

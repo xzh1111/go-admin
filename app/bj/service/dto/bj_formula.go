@@ -23,6 +23,7 @@ type BjFormulaOrder struct {
     CreateBy string `form:"createByOrder"  search:"type:order;column:create_by;table:bj_formula"`
     UpdateBy string `form:"updateByOrder"  search:"type:order;column:update_by;table:bj_formula"`
     FormulaKey string `form:"formulaKeyOrder"  search:"type:order;column:formula_key;table:bj_formula"`
+    Priority string `form:"priorityOrder"  search:"type:order;column:priority;table:bj_formula"`
     
 }
 
@@ -34,7 +35,8 @@ type BjFormulaInsertReq struct {
     Id int `json:"-" comment:""` // 
     Name string `json:"name" comment:"公式名"`
     Formula string `json:"formula" comment:"公式"`
-    FormulaKey string `json:"formulaKey" comment:"公式标识"`
+    FormulaKey string `json:"formulaKey" comment:"公式标识(关联计算)"`
+    Priority int `json:"priority" comment:"公式计算优先级"`
     common.ControlBy
 }
 
@@ -46,6 +48,7 @@ func (s *BjFormulaInsertReq) Generate(model *models.BjFormula)  {
     model.Formula = s.Formula
     model.CreateBy = s.CreateBy // 添加这而，需要记录是被谁创建的
     model.FormulaKey = s.FormulaKey
+    model.Priority = s.Priority
 }
 
 func (s *BjFormulaInsertReq) GetId() interface{} {
@@ -56,7 +59,8 @@ type BjFormulaUpdateReq struct {
     Id int `uri:"id" comment:""` // 
     Name string `json:"name" comment:"公式名"`
     Formula string `json:"formula" comment:"公式"`
-    FormulaKey string `json:"formulaKey" comment:"公式标识"`
+    FormulaKey string `json:"formulaKey" comment:"公式标识(关联计算)"`
+    Priority int `json:"priority" comment:"公式计算优先级"`
     common.ControlBy
 }
 
@@ -68,6 +72,7 @@ func (s *BjFormulaUpdateReq) Generate(model *models.BjFormula)  {
     model.Formula = s.Formula
     model.UpdateBy = s.UpdateBy // 添加这而，需要记录是被谁更新的
     model.FormulaKey = s.FormulaKey
+    model.Priority = s.Priority
 }
 
 func (s *BjFormulaUpdateReq) GetId() interface{} {

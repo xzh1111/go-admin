@@ -11,7 +11,8 @@ type BjFormula struct {
     
     Name string `json:"name" gorm:"type:varchar(255);comment:公式名"` 
     Formula string `json:"formula" gorm:"type:varchar(800);comment:公式"` 
-    FormulaKey string `json:"formulaKey" gorm:"type:varchar(255);comment:公式标识"` 
+    FormulaKey string `json:"formulaKey" gorm:"type:varchar(255);comment:公式标识(关联计算)"` 
+    Priority int `json:"priority" gorm:"type:int;comment:公式计算优先级"` 
     models.ModelTime
     models.ControlBy
 }

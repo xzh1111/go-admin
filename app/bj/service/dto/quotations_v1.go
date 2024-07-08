@@ -1,9 +1,14 @@
 package dto
 
 import (
+    "crypto/md5"
+    "encoding/hex"
+    "fmt"
     "go-admin/app/bj/models"
     "go-admin/common/dto"
     common "go-admin/common/models"
+    "strconv"
+    "time"
 )
 
 type QuotationsV1GetPageReq struct {
@@ -110,6 +115,19 @@ func (s *QuotationsV1InsertReq) Generate(model *models.QuotationsV1) {
     if s.Id == 0 {
         model.Model = common.Model{Id: s.Id}
     }
+    // 获取当前日期时间（精确到小时）
+    currentTime := time.Now().Format("2006010215")
+
+    // 获取当前时间戳
+    timestamp := time.Now().Unix()
+
+    // 计算hash值（只保留4个字符）
+    hashValue := md5.Sum([]byte(strconv.FormatInt(timestamp, 10)))
+    hashString := hex.EncodeToString(hashValue[:])[:4]
+
+    // 拼接报价单号
+    orderNumber := fmt.Sprintf("%s-%s-%d", currentTime, hashString, model.CreateBy)
+    s.OrderNumber = orderNumber
     model.OrderNumber = s.OrderNumber
     model.Style = s.Style
     model.Color = s.Color
