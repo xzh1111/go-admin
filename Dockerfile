@@ -11,8 +11,8 @@ RUN go mod tidy
 COPY . .
 RUN pwd && ls
 
-#RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o go-admin .
-RUN go build
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o go-admin .
+#RUN go build
 
 FROM alpine
 
@@ -21,7 +21,7 @@ COPY --from=builder /go/release/go-admin /
 COPY --from=builder /go/release/config/settings.prod.yml /config/settings.yml
 
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-
+RUN mkdir logs
 EXPOSE 8000
 
 CMD ["/go-admin","server","-c", "/config/settings.yml"]
