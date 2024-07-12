@@ -24,7 +24,7 @@ var govaluateFunctions = map[string]govaluate.ExpressionFunction{
 		}
 		return math.Max(a, b), nil
 	},
-	"Round": func(args ...interface{}) (interface{}, error) {
+	"ROUND": func(args ...interface{}) (interface{}, error) {
 		if len(args) != 1 {
 			return nil, fmt.Errorf("round function expects exactly 1 argument")
 		}

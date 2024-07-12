@@ -21,11 +21,21 @@ func (e *QuotationsV1) GetPage(c *dto.QuotationsV1GetPageReq, p *actions.DataPer
 	var err error
 	var data models.QuotationsV1
 
+	// 定义一个新的 scope 函数
+	userIdScope := func(db *gorm.DB) *gorm.DB {
+		if c.UserId != "1" {
+			e.Log.Debugf("只返回用户:%s 数据", c.UserId)
+
+			return db.Where("create_by = ?", c.UserId)
+		}
+		return db
+	}
 	err = e.Orm.Model(&data).
 		Scopes(
 			cDto.MakeCondition(c.GetNeedSearch()),
 			cDto.Paginate(c.GetPageSize(), c.GetPageIndex()),
 			actions.Permission(data.TableName(), p),
+			userIdScope,
 		).
 		Find(list).Limit(-1).Offset(-1).
 		Count(count).Error
