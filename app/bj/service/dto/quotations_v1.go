@@ -75,6 +75,7 @@ type QuotationsV1Req struct {
 	PipeWeightAndExtraWeight float64 `json:"pipeWeightAndExtraWeight" comment:"管重及额外重量"`
 	Quantity                 int     `json:"quantity" comment:"数量"`
 	SingleIronWeight         float64 `json:"singleIronWeight" comment:"单个白铁重量"`
+	FinalLogisticsWeight     float64 `json:"finalLogisticsWeight" comment:"最终物流重量"`
 	IronPrice                float64 `json:"ironPrice" comment:"白铁价格"`
 	BakingPaintPrice         float64 `json:"bakingPaintPrice" comment:"烤漆价格"`
 	NeedSilkScreen           int     `json:"needSilkScreen" comment:"是否需要丝印"`
@@ -139,6 +140,7 @@ func (s *QuotationsV1InsertReq) Generate(model *models.QuotationsV1) {
 	model.PipeWeightAndExtraWeight = s.PipeWeightAndExtraWeight
 	model.Quantity = s.Quantity
 	model.SingleIronWeight = s.SingleIronWeight
+	model.FinalLogisticsWeight = s.FinalLogisticsWeight
 	model.IronPrice = s.IronPrice
 	model.BakingPaintPrice = s.BakingPaintPrice
 	model.NeedSilkScreen = s.NeedSilkScreen
@@ -181,6 +183,7 @@ func (s *QuotationsV1UpdateReq) Generate(model *models.QuotationsV1) {
 	model.PipeWeightAndExtraWeight = s.PipeWeightAndExtraWeight
 	model.Quantity = s.Quantity
 	model.SingleIronWeight = s.SingleIronWeight
+	model.FinalLogisticsWeight = s.FinalLogisticsWeight
 	model.IronPrice = s.IronPrice
 	model.BakingPaintPrice = s.BakingPaintPrice
 	model.NeedSilkScreen = s.NeedSilkScreen

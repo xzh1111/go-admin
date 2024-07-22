@@ -13,6 +13,7 @@ config/settings.dev.yml
 config/settings.dev.*.yml
 config/settings.dev.*.yml.log
 config/settings.prod.yml
+config/settings.yml
 temp/logs
 config/settings.dev.yml.log
 config/settings.b.dev.yml
@@ -22,3 +23,6 @@ cmd/migrate/migration/version-local/*
 # go sum
 go.sum
 config/settings.deva.yml
+
+*.log
+logs/

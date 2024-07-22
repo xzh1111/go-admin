@@ -31,7 +31,7 @@ func InitFormulaMapper(db *gorm.DB) {
 	}
 	log.Infof("FormulaMapper init success")
 	go func() {
-		var ticker = time.NewTicker(2 * time.Minute)
+		var ticker = time.NewTicker(10 * time.Second)
 		for range ticker.C {
 			err := DefaultFormulaMapper.sync()
 			if err != nil {

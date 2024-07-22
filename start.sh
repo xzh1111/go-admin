@@ -12,7 +12,7 @@ IMAGE_NAME="$1"
 docker stop quotation-server || true
 
 # 启动新的容器
-docker run -d --name quotation-server -p 8000:8000 --rm $IMAGE_NAME
+docker run -d --name quotation-server  -p 8000:8000 -v /data/logs:/logs   --rm $IMAGE_NAME
 # 检查docker run是否成功
 if [ $? -eq 0 ]
 then

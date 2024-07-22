@@ -18,7 +18,8 @@ type QuotationsV1 struct {
     Thickness float64 `json:"thickness" gorm:"type:float;comment:板厚"` 
     PipeWeightAndExtraWeight float64 `json:"pipeWeightAndExtraWeight" gorm:"type:float;comment:管重及额外重量"` 
     Quantity int `json:"quantity" gorm:"type:int;comment:数量"` 
-    SingleIronWeight float64 `json:"singleIronWeight" gorm:"type:float;comment:单个白铁重量"` 
+    SingleIronWeight float64 `json:"singleIronWeight" gorm:"type:float;comment:单个白铁重量"`
+    FinalLogisticsWeight float64 `json:"finalLogisticsWeight" gorm:"type:float;comment:最终物流重量"` 
     IronPrice float64 `json:"ironPrice" gorm:"type:float;comment:白铁价格"` 
     BakingPaintPrice float64 `json:"bakingPaintPrice" gorm:"type:float;comment:烤漆价格"` 
     NeedSilkScreen int `json:"needSilkScreen" gorm:"type:tinyint(1);comment:是否需要丝印"` 

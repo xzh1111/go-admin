@@ -23,9 +23,8 @@ func (e *QuotationsV1) GetPage(c *dto.QuotationsV1GetPageReq, p *actions.DataPer
 
 	// 定义一个新的 scope 函数
 	userIdScope := func(db *gorm.DB) *gorm.DB {
-		if c.UserId != "1" {
+		if c.UserId != "1" && c.UserId != "2" {
 			e.Log.Debugf("只返回用户:%s 数据", c.UserId)
-
 			return db.Where("create_by = ?", c.UserId)
 		}
 		return db

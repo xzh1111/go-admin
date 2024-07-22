@@ -21,7 +21,6 @@ COPY --from=builder /go/release/go-admin /
 COPY --from=builder /go/release/config/settings.prod.yml /config/settings.yml
 
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-RUN mkdir logs
 EXPOSE 8000
 
 CMD ["/go-admin","server","-c", "/config/settings.yml"]
